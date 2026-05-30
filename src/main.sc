@@ -2,22 +2,39 @@ require: slotfilling/slotFilling.sc
   module = sys.zb-common
 theme: /
 
-    state: Start
-        q!: $regex</start>
-        a: Начнём.
+state: Start
+    q!: /.*/
+        go!: /hello
 
-    state: Hello
-        intent!: /привет
-        a: Привет привет
+state: /hello
+    a: Привет! Я бот-помощник. Могу рассказать о погоде и курсах валют.
+    intent: weather
+        go!: /weather
+    intent: currency
+        go!: /currency
+    q!: /.*/
+        go!: /NoMatch
 
-    state: Bye
-        intent!: /пока
-        a: Пока пока
+state: /weather
+    a:
+        Погода сейчас недоступна, но обычно здесь отображается прогноз.
+    intent: weather
+        a: Погода сейчас недоступна, но обычно здесь отображается прогноз.
+    intent: currency
+        go!: /currency
+    q!: /.*/
+        go!: /NoMatch
 
-    state: NoMatch
-        event!: noMatch
-        a: Я не понял. Вы сказали: {{$request.query}}
+state: /currency
+    a:
+        Курсы валют сейчас недоступны, но здесь отображается актуальный курс.
+    intent: currency
+        a: Курсы валют сейчас недоступны, но здесь отображается актуальный курс.
+    intent: weather
+        go!: /weather
+    q!: /.*/
+        go!: /NoMatch
 
-    state: Match
-        event!: match
-        a: {{$context.intent.answer}}
+state: /NoMatch
+    a:
+        Извините, я не понял запрос. Спросите меня о погоде или курсах валют.
