@@ -1,55 +1,21 @@
-require: slotfilling/slotFilling.sc
-  module = sys.zb-common
 theme: /
 
-state: Start
-    event: start
-        go!: /hello
+    state: /hello
+        intent!: /hello
+        q!: *start
+        q!: * (привет/здравствуй*/~добрый (~утро/~вечер/~день/~ночь)/hello/hi)
+        a: Привет привет
 
-    intent: weather
-        go!: /weather
+    state: /weather
+        intent!: /weather
+        q!: * (~погода/~прогноз/что на улице/weather/дождь/завтра) *
+        a: Сегодня солнечно
 
-    intent: currency
-        go!: /currency
+    state: /currency
+        intent!: /currency
+        q!: * (~обмен/~рубль/доллар/евро) *
+        a: Актуальный курс валют
 
-    q: *
-        go!: /NoMatch
-
-state: /hello
-    a: Привет! Я бот-помощник. Могу рассказать о погоде и курсах валют.
-
-    intent: weather
-        go!: /weather
-
-    intent: currency
-        go!: /currency
-
-    q: *
-        go!: /NoMatch
-
-state: /weather
-    a: Сейчас я могу сообщить только тестовый прогноз погоды.
-
-    intent: currency
-        go!: /currency
-
-    intent: weather
-        a: Сейчас я могу сообщить только тестовый прогноз погоды.
-
-    q: *
-        go!: /NoMatch
-
-state: /currency
-    a: Сейчас я могу сообщить только тестовый курс валют.
-
-    intent: weather
-        go!: /weather
-
-    intent: currency
-        a: Сейчас я могу сообщить только тестовый курс валют.
-
-    q: *
-        go!: /NoMatch
-
-state: /NoMatch
-    a: Извините, я не понял запрос. Спросите меня о погоде или курсах валют.
+    state: /NoMatch
+        event!: noMatch
+        a: Я не понял. Переформулируйте.
