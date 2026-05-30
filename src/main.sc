@@ -3,38 +3,53 @@ require: slotfilling/slotFilling.sc
 theme: /
 
 state: Start
-    q!: /.*/
+    event: start
         go!: /hello
+
+    intent: weather
+        go!: /weather
+
+    intent: currency
+        go!: /currency
+
+    q: *
+        go!: /NoMatch
 
 state: /hello
     a: Привет! Я бот-помощник. Могу рассказать о погоде и курсах валют.
+
     intent: weather
         go!: /weather
+
     intent: currency
         go!: /currency
-    q!: /.*/
+
+    q: *
         go!: /NoMatch
 
 state: /weather
-    a:
-        Погода сейчас недоступна, но обычно здесь отображается прогноз.
-    intent: weather
-        a: Погода сейчас недоступна, но обычно здесь отображается прогноз.
+    a: Сейчас я могу сообщить только тестовый прогноз погоды.
+
     intent: currency
         go!: /currency
-    q!: /.*/
+
+    intent: weather
+        a: Сейчас я могу сообщить только тестовый прогноз погоды.
+
+    q: *
         go!: /NoMatch
 
 state: /currency
-    a:
-        Курсы валют сейчас недоступны, но здесь отображается актуальный курс.
-    intent: currency
-        a: Курсы валют сейчас недоступны, но здесь отображается актуальный курс.
+    a: Сейчас я могу сообщить только тестовый курс валют.
+
     intent: weather
         go!: /weather
-    q!: /.*/
+
+    intent: currency
+        a: Сейчас я могу сообщить только тестовый курс валют.
+
+    q: *
         go!: /NoMatch
 
 state: /NoMatch
-    a:
-        Извините, я не понял запрос. Спросите меня о погоде или курсах валют.
+    a: Извините, я не понял запрос. Спросите меня о погоде или курсах валют.
